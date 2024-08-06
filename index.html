@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <style>
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: black;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        .nav-link:hover {
+            color: black;
+            background-color: white;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card:hover .popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .popup {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+        .rating span {
+            color: gold;
+            margin-right: 0.5rem;
+        }
+        .reviews {
+            font-size: 0.875rem;
+            color: gray;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .countdown-item {
+            text-align: center;
+        }
+        .countdown-item span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: black;
+        }
+        .countdown-item p {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: gray;
+        }
+
+        .photo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-text {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .photo-box {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100px; /*  height as needed */
+        }
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+   
+    <nav class="flex items-center justify-between p-4 bg-gray-800">
+        <!-- Left side: Logo -->
+        <div class="flex items-center">
+            <img src="./Assets/logo.jpg" alt="UOM Logo" class="h-8">
+        </div>
+
+        <!-- Center: Links -->
+        <div class="hidden space-x-8 md:flex">
+            <div class="relative group">
+                <a href="#" class="text-white">Home</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for Home -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="text-white">Shop</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for Shop -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="text-white">Blog</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for Blog -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="text-white">Pages</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for Pages -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="text-white">About</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for About -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+            <div class="relative group">
+                <a href="#" class="text-white">Contact</a>
+                <div class="absolute left-0 hidden mt-2 space-y-2 text-black bg-white group-hover:block">
+                    <!-- Dropdown content for Contact -->
+                    <a href="#" class="block px-4 py-2">Subpage 1</a>
+                    <a href="#" class="block px-4 py-2">Subpage 2</a>
+                </div>
+            </div>
+        </div>
+        <!-- Right side: Icons -->
+        <div class="flex items-center space-x-4">
+            <button aria-label="Search" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"></path>
+                </svg>
+            </button>
+            <button aria-label="Profile" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-8 0v2"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11h14M12 4v8l4 2"></path>
+                </svg>
+            </button>
+            <button aria-label="Favorites" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v-2a6 6 0 00-6-6H3a6 6 0 00-6 6v2M21 15v-2a6 6 0 00-6-6M3 15h18M12 9v4l3 1"></path>
+                </svg>
+            </button>
+            <button aria-label="Cart" class="text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4m16-6H4m16 12H4m16-6H4m16 0a8 8 0 11-8-8 8 8 0 018 8z"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <section class="flex flex-col p-8 bg-pink-500 md:flex-row md:p-12">
+        <!-- Left Side: Text -->
+        <div class="flex flex-col justify-center flex-1 pl-4 md:pl-12">
+            <div class="pb-4 mb-4 border-b-2 border-white">
+                <p class="text-xl">Summer 2020</p>
+            </div>
+            <div class="mb-8 text-white">
+                <h1 class="mb-4 text-3xl font-bold text-center md:text-left">Hello New Season</h1>
+                <p class="text-lg text-center md:text-left">Limited time offer - up to 60% off & free shipping</p>
+                <div class="text-center md:text-left">
+                    <a href="#" class="text-lg font-semibold underline">Discover More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Image -->
+        <div class="flex items-center justify-center flex-1 mt-8 md:mt-0">
+            <img src="./Assets/slideshow.jpg" alt="Hero Image" class="object-cover w-3/4 h-auto md:w-1/2">
+        </div>
+    </section>
+
+  <!-- Photo Grid Section -->
+  <section class="flex items-center justify-center min-h-screen p-8">
+    <div class="grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-3">
+        <!-- Square Photo on the Left Side -->
+        <div class="relative flex items-center justify-center col-span-1">
+            <img src="./Assets/girl.jpg" alt="Square Photo" class="object-cover w-full h-auto">
+            <div class="absolute bottom-0 left-0 w-full p-4 text-center text-white bg-black bg-opacity-50">
+                <p>Hot List</p>
+                <h4> Women Collection</h4>
+            </div>
+        </div>
+
+        <!-- Right Side: Rectangle Photo and Two Square Photos Below -->
+        <div class="relative flex flex-col items-center col-span-1 space-y-4 md:col-span-2">
+            <!-- Rectangle Photo -->
+            <div class="relative w-full max-w-lg">
+                <img src="/Assets/girl.jpg" alt="Rectangle Photo" class="object-cover w-full h-auto">
+                <div class="absolute bottom-0 left-0 w-full p-4 text-center text-white bg-black bg-opacity-50">
+                    <p>Hot List</p>
+                    <h2>men Collection</h2>
+                </div>
+            </div>
+
+            <!-- Two Square Photos Below the Rectangle Photo -->
+            <div class="grid w-full max-w-lg grid-cols-2 gap-4">
+                <div class="relative">
+                    <img src="/Assets/girl.jpg" alt="Square Photo 1" class="object-cover w-full h-auto">
+                    <div class="absolute bottom-0 left-0 w-full p-4 text-center text-white bg-black bg-opacity-50">
+                        <p>Hot List</p>
+                    <h2>men Collection</h2>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <img src="/Assets/girl.jpg" alt="Square Photo 2" class="object-cover w-full h-auto">
+                    <div class="absolute bottom-0 left-0 w-full p-4 text-center text-white bg-black bg-opacity-50">
+                        <p>Hot List</p>
+                    <h2>men Collection</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Trendy Products Section -->
+    <section class="p-8">
+        <div class="text-center">
+            <!-- Heading -->
+            <h3 class="mb-4 text-2xl font-bold">Our TRENDY PRODUCTS</h3>
+            
+            <!-- Links -->
+            <div class="flex flex-col justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-6">
+                <a href="#" class="nav-link">All New Arrivals</a>
+                <a href="#" class="nav-link">Best Seller</a>
+                <a href="#" class="nav-link">Top Rated</a>
+            </div>
+        </div>
+    </section>
+
+  <!-- Product Cards Section -->
+  <section class="p-8">
+    <div class="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-4">
+        <!-- Card Example -->
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/glasses.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Zessi Dresses <br>
+                    $99</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span> 
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+  
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/product.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Cotton Jersey T-Shirt <br>
+                    $17</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/mackup.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Shirt In Botanical Cheetah Print <br>
+                    $62</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/mackup.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Colorful Jacket <br>
+                    $29</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/jens.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Cableknit Shawl <br>
+                    $99</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/shirt.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Kirby T-Shirt <br>
+                    $17</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/product.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Calvin Shorts <br>
+                    $62</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+        <div class="overflow-hidden bg-white rounded-lg shadow-lg card">
+            <img src="./Assets/glasses.jpg" alt="Product Image" class="object-cover w-full h-48">
+            <div class="p-4">
+                <h4 class="mb-2 text-lg font-semibold">Dress</h4>
+                <p class="mb-2 text-gray-600">Cropped Faux Leather Jacket <br>
+                    $29</p>
+                <div class="mb-2 rating">
+                    <span>★★★★☆</span>
+                    <span class="reviews">(4k+ reviews)</span>
+                </div>
+            </div>
+            <div class="text-center popup">
+                <button class="px-4 py-2 text-white bg-black rounded">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+ <!-- Main Section -->
+ <section class="p-8 bg-gray-200 md:p-12">
+    <div class="flex flex-col items-center justify-between max-w-6xl mx-auto md:flex-row">
+        <!-- Left Side -->
+        <div class="md:w-1/2 lg:ml-12 lg:mt-12">
+            <h4 class="mb-2 text-lg font-bold text-red-600">Deal of the Week</h4>
+            <h2 class="mb-4 text-3xl font-bold md:text-4xl">Spring Collection</h2>
+            <p class="mb-4 text-lg">Shop now and discover our latest arrivals with exciting offers. Limited time only!</p>
+            <a href="#" class="font-semibold text-blue-500 underline">Shop Now</a>
+            <div class="mt-8 countdown">
+                <div class="countdown-item">
+                    <span>02</span>
+                    <p>Days</p>
+                </div>
+                <div class="countdown-item">
+                    <span>12</span>
+                    <p>Hours</p>
+                </div>
+                <div class="countdown-item">
+                    <span>34</span>
+                    <p>Minutes</p>
+                </div>
+                <div class="countdown-item">
+                    <span>56</span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+        </div>
+        <!-- Right Side -->
+        <div class="mt-8 md:w-1/2 md:mt-0">
+            <img src="./Assets/coat.jpg" alt="Spring Collection" class="object-cover w-full h-auto rounded-lg shadow-lg">
+        </div>
+    </div>
+</section>
+
+<!-- Photos Section -->
+<section class="p-8">
+    <div class="grid max-w-6xl grid-cols-1 gap-4 mx-auto md:grid-cols-2">
+        <!-- Photo 1 -->
+        <div class="relative photo-container">
+            <img src="./Assets/glasses.jpg" alt="Photo 1" class="object-cover w-full h-64 rounded-lg">
+            <div class="photo-text">Mens Glasses</div>
+        </div>
+        <!-- Photo 2 -->
+        <div class="relative photo-container">
+            <img src="./Assets/shirt.jpg" alt="Photo 2" class="object-cover w-full h-64 rounded-lg">
+            <div class="photo-text">Mens T-shirt</div>
+        </div>
+    </div>
+</section>
+
+<!-- Photo Boxes Section -->
+<section class="p-8">
+  
+    <div class="grid max-w-6xl grid-cols-2 gap-4 mx-auto sm:grid-cols-3 md:grid-cols-6">
+        <!-- Box 1 -->
+        <div class="photo-box">
+            <img src="./Assets/boy.jpg" alt="Photo 1">
+        </div>
+        <!-- Box 2 -->
+        <div class="photo-box">
+            <img src="./Assets/camera.jpg" alt="Photo 2">
+        </div>
+        <!-- Box 3 -->
+        <div class="photo-box">
+            <img src="./Assets/logo.jpg" alt="Photo 3">
+        </div>
+        <!-- Box 4 -->
+        <div class="photo-box">
+            <img src="./Assets/product.jpg" alt="Photo 4">
+        </div>
+        <!-- Box 5 -->
+        <div class="photo-box">
+            <img src="./Assets/girl.jpg" alt="Photo 5">
+        </div>
+        <!-- Box 6 -->
+        <div class="photo-box">
+            <img src="./Assets/glasses.jpg" alt="Photo 6">
+        </div>
+         <div class="photo-box">
+            <img src="./Assets/shirt.jpg" alt="Photo 6">
+        </div>
+
+        <div class="photo-box">
+            <img src="./Assets/product.jpg" alt="Photo 4">
+        </div>
+        <!-- Box 5 -->
+        <div class="photo-box">
+            <img src="./Assets/girl.jpg" alt="Photo 5">
+        </div>
+        <!-- Box 6 -->
+        <div class="photo-box">
+            <img src="./Assets/glasses.jpg" alt="Photo 6">
+        </div>
+         <div class="photo-box">
+            <img src="./Assets/shirt.jpg" alt="Photo 6">
+        </div>
+        <div class="photo-box">
+            <img src="./Assets/shirt.jpg" alt="Photo 6">
+        </div>
+    </div>
+    </div>
+</section>
+
+
+<!-- Services Section -->
+<section class="max-w-6xl p-8 mx-auto mt-8 bg-white rounded-lg shadow-md md:p-12">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+   
+        <div class="flex items-center space-x-4">
+            <div class="service-icon">
+               
+                <i class="fas fa-truck"></i>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold">Fast and Free Delivery</h4>
+                <p class="text-gray-600">Enjoy free shipping on all orders with fast delivery options.</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <div class="service-icon">
+          
+                <i class="fas fa-headset"></i>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold">24/7 Customer Support</h4>
+                <p class="text-gray-600">We're here to help you anytime, day or night.</p>
+            </div>
+        </div>
+       
+        <div class="flex items-center space-x-4">
+            <div class="service-icon">
+                
+                <i class="fas fa-undo"></i>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold">Return Policy</h4>
+                <p class="text-gray-600">Hassle-free returns within 30 days of purchase.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer Section -->
+<footer class="py-8 text-white bg-gray-800">
+    <div class="container px-4 mx-auto">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <!-- Contact Information -->
+            <div>
+                <h3 class="mb-4 text-xl font-bold">Uomo</h3>
+                <p class="mb-2">1418 River Drive, Suite 35<br>Cottonhall, CA 9622<br>United States</p>
+                <p class="mb-2">Email: <a href="mailto:sale@uomo.com" class="text-blue-300 hover:underline">sale@uomo.com</a></p>
+                <p>Phone: <a href="tel:+12463450695" class="text-blue-300 hover:underline">+1 246-345-0695</a></p>
+            </div>
+            <!-- Company Links -->
+            <div>
+                <h3 class="mb-4 text-xl font-bold">Company</h3>
+                <ul>
+                    <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Affiliates</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- Shop Links -->
+            <div>
+                <h3 class="mb-4 text-xl font-bold">Shop</h3>
+                <ul>
+                    <li><a href="#" class="text-gray-400 hover:text-white">New Arrivals</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Accessories</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Men</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Women</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Shop All</a></li>
+                </ul>
+            </div>
+            <!-- Help Links -->
+            <div>
+                <h3 class="mb-4 text-xl font-bold">Help</h3>
+                <ul>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Customer Service</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">My Account</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Find a Store</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Legal & Privacy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Gift Card</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Newsletter Signup -->
+        <div class="mt-8">
+            <h3 class="mb-4 text-xl font-bold">Subscribe</h3>
+            <p class="mb-4">Be the first to get the latest news about trends, promotions, and much more!</p>
+            <div class="flex flex-col items-center gap-4 sm:flex-row">
+                <input type="email" placeholder="Your email address" class="px-4 py-2 text-white bg-gray-900 border border-gray-600 rounded-md">
+                <button class="px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Subscribe</button>
+            </div>
+        </div>
+        <!-- Secure Payments -->
+        <div class="mt-8 text-center">
+            <p class="text-gray-400">Secure payments</p>
+            <p class="text-gray-400">Acceptable payment gateways</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
